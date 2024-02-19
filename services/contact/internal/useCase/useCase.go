@@ -7,9 +7,9 @@ import (
 )
 
 type Contact interface {
-	Create(contacts ...*contact.Contact) ([]*contact.Contact, error)
-	Update(contactUpdate contact.Contact) (*contact.Contact, error)
-	Delete(ID uuid.UUID) (string, error)
+	Create(contact *contact.Contact) (*contact.Contact, error)
+	Update(ID uuid.UUID, contactUpdate contact.Contact) (*contact.Contact, error)
+	Delete(ID uuid.UUID) error
 
 	ContactReader
 }
@@ -20,10 +20,10 @@ type ContactReader interface {
 }
 
 type Group interface {
-	Create(group *group.Group) (*group.Group, error)
-	Update(groupUpdate *group.Group) (*group.Group, error)
-
-	ContactGroup
+	Create(groupCreate *group.Group) (*group.Group, error)
+	Update(ID uuid.UUID, groupUpdate *group.Group) (*group.Group, error)
+	Delete(ID uuid.UUID) error
+	GroupReader
 }
 
 type GroupReader interface {

@@ -1,7 +1,7 @@
 package http
 
 import (
-	"architecture_go/services/contact/internal/useCase"
+	useCase "architecture_go/services/contact/internal/usecase"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"

@@ -12,9 +12,9 @@ type Storage interface {
 }
 
 type Contact interface {
-	CreateContact(contacts ...*contact.Contact) ([]*contact.Contact, error)
+	CreateContact(contact *contact.Contact) (*contact.Contact, error)
 	UpdateContact(ID uuid.UUID, contactUpdate contact.Contact) (*contact.Contact, error)
-	DeleteContact(ID uuid.UUID) (string, error)
+	DeleteContact(ID uuid.UUID) error
 
 	ContactReader
 }
@@ -25,10 +25,11 @@ type ContactReader interface {
 }
 
 type Group interface {
-	CreateGroup(group *group.Group) (*group.Group, error)
+	CreateGroup(groupCreate *group.Group) (*group.Group, error)
 	UpdateGroup(ID uuid.UUID, groupUpdate *group.Group) (*group.Group, error)
+	DeleteGroup(ID uuid.UUID) error
 
-	ContactGroup
+	GroupReader
 }
 
 type GroupReader interface {
@@ -37,6 +38,6 @@ type GroupReader interface {
 }
 
 type ContactGroup interface {
-	AddContactsToGroup(groupID uuid.UUID, contactID ...uuid.UUID) error
+	AddContactToGroup(groupID uuid.UUID, contactID uuid.UUID) error
 	DeleteContactFromGroup(groupID, contactID uuid.UUID) error
 }

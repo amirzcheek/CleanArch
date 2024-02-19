@@ -1,12 +1,12 @@
-package contact
+package contactInGroup
 
 import "architecture_go/services/contact/internal/useCase/adapters/storage"
 
 type UseCase struct {
-	adapterStorage storage.Contact
+	adapterStorage storage.ContactGroup
 }
 
-func New(storage storage.Contact) *UseCase {
+func New(storage storage.ContactGroup) *UseCase {
 	var u = &UseCase{
 		adapterStorage: storage,
 	}

@@ -5,22 +5,22 @@ import (
 	"github.com/google/uuid"
 )
 
-func (rep *Repository) CreateContact(contacts ...*contact.Contact) ([]*contact.Contact, error) {
+func (r *Repository) CreateContact(contact *contact.Contact) (*contact.Contact, error) {
 	return nil, nil
 }
 
-func (rep *Repository) UpdateContact(ID uuid.UUID, contactUpdate contact.Contact) ([]*contact.Contact, error) {
+func (r *Repository) UpdateContact(ID uuid.UUID, contactUpdate contact.Contact) (*contact.Contact, error) {
 	return nil, nil
 }
 
-func (rep *Repository) DeleteContact(ID uuid.UUID) error {
+func (r *Repository) DeleteContact(ID uuid.UUID) error {
 	return nil
 }
 
-func (rep *Repository) ReadContactByID(ID uuid.UUID) ([]*contact.Contact, error) {
+func (r *Repository) ReadContactByID(ID uuid.UUID) (*contact.Contact, error) {
 	return nil, nil
 }
 
-func (rep *Repository) ListContact() ([]*contact.Contact, error) {
+func (r *Repository) ListContacts() ([]*contact.Contact, error) {
 	return nil, nil
 }
