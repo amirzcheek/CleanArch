@@ -5,6 +5,7 @@ import (
 	delivery "architecture_go/services/contact/internal/delivery/http"
 	repository "architecture_go/services/contact/internal/repository/storage/postgres"
 	contactUseCase "architecture_go/services/contact/internal/useCase/contact"
+	contactGroupUseCase "architecture_go/services/contact/internal/useCase/contactInGroup"
 	groupUseCase "architecture_go/services/contact/internal/useCase/group"
 	"fmt"
 	"log"
@@ -12,6 +13,7 @@ import (
 )
 
 func main() {
+	// Connect to the database
 	dbInfo := &postgres.DBInfo{
 		Host:     "localhost",
 		Port:     "5432",
@@ -19,28 +21,29 @@ func main() {
 		Password: "1",
 		DBName:   "cleanArch",
 	}
-
 	db, err := postgres.ConnectDB(dbInfo)
 	if err != nil {
-		log.Fatalf("Ошибка подключения к БД: %v", err)
+		log.Fatalf("Error connecting to the database: %v", err)
 	}
 	defer db.Close()
 
-	fmt.Println("Подключение к БД успешно")
+	fmt.Println("Database connection successful")
 
+	// Initialize repository
 	r := repository.New(db)
 
+	// Initialize use cases
 	ucContact := contactUseCase.New(r)
 	ucGroup := groupUseCase.New(r)
+	ucContactGroup := contactGroupUseCase.New(r)
 
-	d := delivery.New(ucContact, ucGroup)
+	// Initialize HTTP delivery
+	d := delivery.New(ucContact, ucGroup, ucContactGroup)
 
-	addr := 4000
-	addrStr := fmt.Sprintf(`:%d`, addr)
-
-	log.Printf("Starting server on port: %d", addr)
-
-	if err := http.ListenAndServe(addrStr, d.router); err != nil {
+	// Start HTTP server
+	addr := ":4000"
+	log.Printf("Starting server on %s", addr)
+	if err := http.ListenAndServe(addr, d.Router); err != nil {
 		log.Fatalf("Could not start server: %v", err)
 	}
 	//firstName, err := name.New("Amirkhan")

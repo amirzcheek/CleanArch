@@ -1,11 +1,14 @@
 package postgres
 
-import "github.com/google/uuid"
+import (
+	"context"
+	"github.com/google/uuid"
+)
 
-func (r *Repository) AddContactsToGroup(groupID uuid.UUID, contactIDs ...uuid.UUID) error {
+func (r *Repository) AddContactToGroup(ctx context.Context, groupID, contactID uuid.UUID) error {
 	return nil
 }
 
-func (r *Repository) DeleteContactFromGroup(groupID, contactID uuid.UUID) error {
+func (r *Repository) DeleteContactFromGroup(ctx context.Context, groupID, contactID uuid.UUID) error {
 	return nil
 }

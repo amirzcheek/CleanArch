@@ -3,41 +3,43 @@ package storage
 import (
 	"architecture_go/services/contact/internal/domain/contact"
 	"architecture_go/services/contact/internal/domain/group"
+	"context"
 	"github.com/google/uuid"
 )
 
 type Storage interface {
 	Contact
 	Group
+	ContactGroup
 }
 
 type Contact interface {
-	CreateContact(contact *contact.Contact) (*contact.Contact, error)
-	UpdateContact(ID uuid.UUID, contactUpdate contact.Contact) (*contact.Contact, error)
-	DeleteContact(ID uuid.UUID) error
+	CreateContact(ctx context.Context, contact *contact.Contact) (*contact.Contact, error)
+	UpdateContact(ctx context.Context, ID uuid.UUID, contactUpdate contact.Contact) (*contact.Contact, error)
+	DeleteContact(ctx context.Context, ID uuid.UUID) error
 
 	ContactReader
 }
 
 type ContactReader interface {
-	ListContacts() ([]*contact.Contact, error)
-	ReadContactByID(ID uuid.UUID) (contact *contact.Contact, err error)
+	ListContacts(ctx context.Context) ([]*contact.Contact, error)
+	ReadContactByID(ctx context.Context, ID uuid.UUID) (contact *contact.Contact, err error)
 }
 
 type Group interface {
-	CreateGroup(groupCreate *group.Group) (*group.Group, error)
-	UpdateGroup(ID uuid.UUID, groupUpdate *group.Group) (*group.Group, error)
-	DeleteGroup(ID uuid.UUID) error
+	CreateGroup(ctx context.Context, groupCreate *group.Group) (*group.Group, error)
+	UpdateGroup(ctx context.Context, ID uuid.UUID, groupUpdate *group.Group) (*group.Group, error)
+	DeleteGroup(ctx context.Context, ID uuid.UUID) error
 
 	GroupReader
 }
 
 type GroupReader interface {
-	ListGroups() ([]*group.Group, error)
-	ReadGroupByID(ID uuid.UUID) (*group.Group, error)
+	ListGroups(ctx context.Context) ([]*group.Group, error)
+	ReadGroupByID(ctx context.Context, ID uuid.UUID) (*group.Group, error)
 }
 
 type ContactGroup interface {
-	AddContactToGroup(groupID uuid.UUID, contactID uuid.UUID) error
-	DeleteContactFromGroup(groupID, contactID uuid.UUID) error
+	AddContactToGroup(ctx context.Context, groupID uuid.UUID, contactID uuid.UUID) error
+	DeleteContactFromGroup(ctx context.Context, groupID, contactID uuid.UUID) error
 }
